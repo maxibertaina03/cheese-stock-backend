@@ -89,20 +89,24 @@ export class UnidadController {
     if (peso === null || peso === undefined || peso < 0) {
       return res.status(400).json({ error: 'El peso debe ser 0 o mayor' });
     }
+    
+    
+    const unidadRepo = AppDataSource.getRepository(Unidad);
+    const particionRepo = AppDataSource.getRepository(Particion);
 
     // Si es 0, debe ser egreso final
-    if (peso === 0 && Number(unidad.pesoActual) !== 0) {
+    const unidad = await unidadRepo.findOneBy({ id: unidadId });
+      if (!unidad || !unidad.activa) {
+        return res.status(404).json({ error: 'Unidad no encontrada o inactiva' });
+      }
+    
+      if (peso === 0 && Number(unidad.pesoActual) !== 0) {
       return res.status(400).json({ error: 'No se puede egresar 0 g si aún queda peso' });
     }
 
 
-      const unidadRepo = AppDataSource.getRepository(Unidad);
-      const particionRepo = AppDataSource.getRepository(Particion);
 
-      const unidad = await unidadRepo.findOneBy({ id: unidadId });
-      if (!unidad || !unidad.activa) {
-        return res.status(404).json({ error: 'Unidad no encontrada o inactiva' });
-      }
+
 
       if (Number(unidad.pesoActual) < peso) {
         return res.status(400).json({ error: 'Peso insuficiente en la unidad' });
