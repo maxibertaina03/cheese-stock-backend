@@ -4,6 +4,7 @@ import productoRoutes from './routes/producto.routes';
 import unidadRoutes from './routes/unidad.routes';
 import tipoQuesoRoutes from './routes/tipoQueso.routes';
 import particionRoutes from './routes/particion.routes';
+import authRoutes from './routes/auth.routes';
 
 const app = express();
 
@@ -14,5 +15,6 @@ app.use('/api/tipos-queso', tipoQuesoRoutes);
 app.use('/api/productos', productoRoutes);
 app.use('/api/unidades', unidadRoutes);
 app.use('/api/particiones', particionRoutes);
+app.use('/api/auth', authRoutes);
 
 export default app;

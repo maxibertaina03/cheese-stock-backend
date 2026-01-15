@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { AppDataSource } from '../config/database';
 import { Unidad } from '../entities/Unidad';
 import { UnidadController } from '../controllers/unidad.controller';
+import { auth, requireRole } from '../middlewares/auth';
 
 const router = Router();
 
@@ -26,11 +27,10 @@ const getHistorial = async (req: Request, res: Response) => {
 router.get('/historial', getHistorial);
 
 // Rutas principales
-router.post('/', UnidadController.create);
+router.post('/', auth, requireRole('admin'), UnidadController.create);
 router.get('/', UnidadController.getAll);
-router.post('/:id/particiones', UnidadController.addParticiones);
-router.put('/:id', UnidadController.update);
-
+router.post('/:id/particiones', auth, requireRole('admin'), UnidadController.create);
+router.put('/:id', auth, requireRole('admin'), UnidadController.update);
 
 
 export default router;

@@ -4,6 +4,7 @@ import { TipoQueso } from '../entities/TipoQueso';
 import { Producto } from '../entities/Producto';
 import { Unidad } from '../entities/Unidad';
 import { Particion } from '../entities/Particion';
+import { Usuario } from '../entities/Usuario';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -17,5 +18,5 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || 'cheese_stock',
   synchronize: true,
   logging: false,
-  entities: [TipoQueso, Producto, Unidad, Particion],
+  entities: [TipoQueso, Producto, Unidad, Particion, Usuario],
 });
